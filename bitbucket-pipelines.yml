@@ -1,0 +1,17 @@
+image: node:alpine
+
+definitions:
+  caches:
+    npm: ~/.npm
+
+pipelines:
+  default:
+    - step:
+        name: Build app
+        deployment: preview
+        caches:
+          - npm
+        script:
+          - apk add --no-cache bash
+          - npm ci
+          - npx eas-cli build --platform all --non-interactive --no-wait
